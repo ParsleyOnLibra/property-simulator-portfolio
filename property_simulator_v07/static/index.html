@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>집의 다른 단위 | 부동산 × 주식</title>
+<style>
+:root{--bg:#f5f6f3;--ink:#19342d;--muted:#677970;--green:#19664e;--line:#dce3db;--white:#fff;--accent:#dcf4b0}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,'Malgun Gothic',sans-serif;font-size:14px}header{border-bottom:1px solid var(--line);background:white}nav{max-width:1240px;margin:auto;padding:22px 28px;display:flex;justify-content:space-between;align-items:center}.brand{font-weight:800;font-size:19px}.tag{font-size:12px;color:var(--muted)}main{max-width:1240px;margin:auto;padding:38px 28px}h1{font-size:38px;letter-spacing:-1.8px;line-height:1.3;margin:12px 0}h2{font-size:18px;margin:0 0 20px}h3{font-size:15px}.eyebrow{letter-spacing:2px;font-size:11px;font-weight:700;color:var(--green)}p{line-height:1.7}.muted,small{color:var(--muted)}.notice{background:#fff4d6;border:1px solid #ebd7a3;border-radius:10px;padding:12px 16px;line-height:1.6;margin:24px 0}.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}button{font:inherit;cursor:pointer;border:1px solid var(--line);background:white;color:var(--ink);border-radius:8px;padding:11px 16px}button.active,button.primary{background:var(--green);color:white;border-color:var(--green)}button:disabled{opacity:.5;cursor:wait}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b0cf70;outline-offset:2px}.grid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:22px;align-items:start}.card{background:white;border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px}.field{display:block;margin-bottom:17px}.field span{display:block;font-size:12px;font-weight:650;margin-bottom:8px}input,select{width:100%;border:1px solid #d4ded5;background:#fbfcfa;border-radius:7px;padding:11px;color:var(--ink);font:inherit;min-width:0}input[type=file]{font-size:12px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{width:100%}.separator{height:1px;background:var(--line);margin:24px 0}.hero{background:var(--ink);color:white;padding:28px;border-radius:14px;margin-bottom:18px}.hero small{color:#c7d9ce}.big{font-size:43px;letter-spacing:-1.7px;font-weight:700;margin:14px 0}.big span{font-size:20px;margin-left:6px;font-weight:400}.pill{display:inline-block;font-size:11px;border:1px solid #547265;border-radius:30px;padding:5px 10px;color:#dcefcc}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}.stat{background:white;border:1px solid var(--line);border-radius:10px;padding:17px}.stat strong{display:block;font-size:20px;margin-top:10px}.stat small{font-size:11px}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}th,td{text-align:left;border-bottom:1px solid #e6ebe4;padding:12px 9px}th{color:var(--muted);font-weight:500}td:first-child,th:first-child{padding-left:0}.error{color:#9f3023;background:#fff1ec;border:1px solid #e9c4b8;padding:13px 16px;border-radius:9px;margin-bottom:18px;white-space:pre-line}.empty{padding:45px 20px;text-align:center;color:var(--muted);line-height:1.8}.row{display:flex;gap:10px;align-items:center;justify-content:space-between}.holdrow{display:grid;grid-template-columns:1fr 100px 48px;gap:8px;margin:8px 0}.holdrow button{padding:8px}.caption{font-size:12px;line-height:1.7}.warn{font-size:12px;color:#8c5c12;line-height:1.8}svg{width:100%;height:auto;display:block}footer{margin:30px 0 12px;color:var(--muted);font-size:12px;line-height:1.8}details summary{cursor:pointer;font-weight:650}code{background:#edf1ea;padding:2px 5px;border-radius:3px}.hidden,[hidden]{display:none!important}.progress{height:6px;border-radius:5px;background:#e1e9dd;margin-top:12px;overflow:hidden}.progress div{height:100%;background:var(--green)}a{color:var(--green)}@media(max-width:900px){.grid{grid-template-columns:1fr}.big{font-size:36px}h1{font-size:30px}main{padding:24px 16px}nav{padding:18px 16px}.stats{gap:7px}.stat{padding:12px}.stat strong{font-size:17px}.card{padding:18px}}@media(max-width:450px){.tag{display:none}.tabs button{padding:10px;font-size:12px}.stats{grid-template-columns:1fr}.holdrow{grid-template-columns:1fr 75px 40px}}
+</style></head><body>
+<header><nav><div class="brand">▥ &nbsp;집의 다른 단위</div><span class="tag">PROPERTY × EQUITY · Python v0.7</span></nav></header>
+<main><div class="eyebrow">A DIFFERENT WAY TO MEASURE A HOME</div><h1>이 집은, 주식 몇 주일까?</h1><p class="muted">집 한 채의 가격을 현재 또는 과거 특정 날짜의 주식 수로 환산합니다.</p>
+<div class="notice" id="dataNotice">예시 데이터 · 모든 가격·환율·아파트는 기능 시연을 위한 가상 값입니다. 실제 시세가 아닙니다.</div>
+<div class="tabs" role="group" aria-label="비교 모드"><button class="active" id="tabData">시점별 비교</button><button id="tabManual">가격 직접 입력</button><button id="tabSync">자동 수집 · 저장</button><button id="tabImport">내 CSV 불러오기</button></div>
+<div id="error" class="error" role="alert" hidden></div>
+<section id="syncPanel" class="card"><h2>실제 데이터 자동 수집</h2><p class="caption muted">지정한 단지·종목의 기간을 선택하면 자료를 내려받아 이 컴퓨터에 저장합니다. 아파트는 2006년부터, 주식·환율은 2000년 이후 제공 가능한 날짜만 수집합니다.</p>
+<div class="two"><label class="field"><span>공공데이터포털 인증키 (Decoding)</span><input id="apiKey" type="password" autocomplete="off" placeholder="아파트 수집에 필요 · 입력한 키는 서버 종료 시 삭제"></label><div class="caption"><p><a href="https://www.data.go.kr/data/15126469/openapi.do" target="_blank" rel="noopener">국토교통부 아파트 매매 실거래 API 활용신청 ↗</a><br>아파트 API와 <a href="https://www.data.go.kr/data/15126464/openapi.do" target="_blank" rel="noopener">오피스텔 매매 API</a> 모두 활용신청한 키를 사용하세요. 기존 키 파일은 그대로 읽습니다. 주식 목록은 고정 등록 방식으로, 국내 순위 API를 호출하지 않습니다. 키를 채팅으로 보낼 필요는 없습니다. <span id="keyStatus"></span></p></div></div>
+<input type="checkbox" id="seoulAll" hidden><input type="checkbox" id="rankKr" hidden><input type="checkbox" id="rankUs" hidden>
+<p class="caption">지정 부동산 8개: 한남더힐 · 트리마제 · 압구정 현대 · 은마 · 나인원 한남 · 래미안 원베일리 · 타워팰리스 · 시그니엘(롯데월드타워).</p>
+<p class="caption muted">아파트는 용산·성동·강남·서초 4개 구, 시그니엘은 송파구 오피스텔 API를 조회하고 지정 단지만 저장합니다. 구·월 단위 API이므로 단지 8개가 요청 8회를 뜻하지는 않습니다.</p>
+<input id="syncRegions" hidden value="11170,11200,11680,11650"><label class="field"><span>현재 등록 종목 · 주식 12개 + ETF 5개 (추가·제거 가능)</span><input id="syncSymbols" readonly></label>
+<div class="two"><label class="field"><span>수집 시작일</span><input type="date" id="syncStart" min="2000-01-01" value="2000-01-01"></label><label class="field"><span>수집 종료일</span><input type="date" id="syncEnd" min="2000-01-01"></label></div>
+<div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px"><label><input style="width:auto" type="checkbox" id="collectA" checked> 아파트</label><label><input style="width:auto" type="checkbox" id="collectS" checked> 주식</label><label><input style="width:auto" type="checkbox" id="collectF" checked> 환율</label></div>
+<label class="caption"><input style="width:auto" type="checkbox" id="refreshAll"> 과거 저장 아파트 자료까지 다시 확인</label><br><label class="caption"><input style="width:auto" type="checkbox" id="autoRefresh"> 서버 실행 중 24시간마다 자동 갱신 (종료일은 오늘까지 연장)</label>
+<p class="caption muted">아파트는 선택일이 포함된 월 전체를 수집합니다. 같은 단지·면적·계약일의 거래가 여러 건이면 중위값으로 표시합니다. 주식은 Yahoo의 분할 정보를 역산한 추정 종가이며 기업행위 누락 시 오차가 생길 수 있습니다.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button id="syncStartButton" class="primary">수집 시작 / 갱신</button><button id="syncStopButton" disabled>수집 중지</button><button id="useSavedButton">저장된 자료로 비교</button><button id="autoOffButton">자동 갱신 끄기</button></div>
+<div id="syncState" class="caption" role="status" style="margin-top:16px">저장 상태 확인 중</div><div class="progress"><div id="syncProgress" style="width:0%"></div></div><div id="syncErrors" class="warn" style="margin-top:12px"></div><div id="syncStats" class="tablewrap"></div>
+<p class="caption muted">처음에는 최근 1년부터 수집합니다. 더 오래된 비교가 필요하면 시작일을 앞당기세요. 기존 과거 월은 재사용하고 최근 6개월 안팎을 다시 조회합니다. 중지해도 완료된 자료는 보존됩니다.</p></section>
+<section id="importPanel" class="card" hidden><h2>내 가격 데이터 연결</h2><p class="muted">아래 3개 CSV를 한 번에 교체합니다. 업로드한 값은 출처 검증 없이 계산에 사용하며, 새로고침하면 저장된 자동 수집 자료(없으면 예시 자료)로 돌아갑니다. 각 파일은 UTF-8 형식으로 저장하세요.</p><div class="two"><label class="field"><span>아파트 · apartments.csv</span><input type="file" id="fileA" accept=".csv"></label><label class="field"><span>주식 · stocks.csv</span><input type="file" id="fileS" accept=".csv"></label></div><label class="field"><span>환율 · fx.csv (국내 주식만 사용할 때는 헤더만 있는 파일도 가능)</span><input type="file" id="fileF" accept=".csv"></label><p class="caption">열 형식은 프로젝트의 <code>data/</code> 예시와 <code>README.md</code>를 참고하세요. 아파트 금액은 원 단위, 환율은 1달러당 원입니다. 주가는 당시 실제 종가만 넣으세요. 수정주가·가격지수·취소 거래는 지원하지 않습니다.</p><button id="importButton" class="primary">검증하고 데이터 교체</button> <button id="demoButton">예시 데이터로 복원</button><p id="ranges" class="caption"></p></section>
+<section class="card"><h2>지정 부동산 8개</h2><div id="housingStatus" class="caption">한남더힐 · 트리마제 · 압구정 현대 · 은마 · 나인원 한남 · 래미안 원베일리 · 타워팰리스 · 시그니엘</div><p class="caption muted">거래가 수집된 단지·차수·전용면적을 아래에서 선택합니다. 미수집이나 거래 없음은 0원으로 표시하지 않습니다.</p></section><section class="card" id="rankPanel"><h2>등록된 비교 종목</h2><p id="watchNote" class="caption muted"></p><div id="rankingTables"></div><details><summary>종목 추가 · 제거</summary><p class="caption">한 줄에 종목코드,표시이름을 입력하세요. 저장하면 비교 목록과 다음 수집 대상에 반영됩니다. 제거해도 기존 주가 기록은 삭제하지 않습니다.</p><textarea id="watchEditor" rows="12" style="width:100%;margin:12px 0" aria-label="등록 종목 편집"></textarea><button id="watchSave" type="button">종목 목록 저장</button><p class="caption">예: 035720.KS,카카오 또는 NFLX,넷플릭스. 추가한 종목은 주식 수집 후 가격 비교가 가능합니다.</p></details></section><div class="grid"><aside>
+<form id="compareForm" class="card"><div id="dataFields"><h2>01 &nbsp;아파트 선택</h2><label class="field"><span>지역</span><select id="region"></select></label><label class="field"><span>동·단지 이름 검색</span><input id="aptSearch" type="search" placeholder="예: 성수동, 래미안"></label><label class="field"><span>단지 · 전용면적</span><select id="apartment"></select></label></div>
+<div id="manualFields" hidden><h2>01 &nbsp;아파트 가격</h2><label class="field"><span>가격 (원)</span><input id="manualHouse" type="number" min="1" step="1" value="1200000000"></label></div>
+<label class="field"><span>부동산 기준일 · 집값을 정할 날짜</span><input type="date" id="houseDate" min="2000-01-01" value="2025-01-15" required></label>
+<div class="separator"></div><h2>02 &nbsp;주식 선택</h2><div id="stockFields"><label class="field"><span>종목 목록</span><select id="stockSet"><option value="ALL">등록된 비교 종목</option></select></label><label class="field"><span>시장</span><select id="market"><option value="ALL">국내 + 미국</option><option value="KRW">국내 · KRW</option><option value="USD">미국 · USD</option></select></label><label class="field"><span>비교 종목</span><select id="stock"></select></label></div>
+<div id="manualStockFields" hidden><label class="field"><span>통화</span><select id="manualCurrency"><option value="KRW">국내 · 원</option><option value="USD" selected>미국 · 달러</option></select></label><label class="field"><span>1주 가격 (선택한 통화)</span><input type="number" id="manualPrice" min="0.0001" step="any" value="200"></label><label class="field" id="fxField"><span>환율 (원/달러)</span><input type="number" id="manualFx" min="0.0001" step="any" value="1400"></label></div>
+<div id="inputPricing"><label class="field"><span>계산 방식</span><select id="priceMode"><option value="INPUT">주가를 직접 입력</option><option value="DATE">날짜의 저장된 종가 사용</option></select></label><div id="inputPriceFields"><label class="field"><span id="priceUnit">비교할 1주 가격 (원)</span><input id="inputPrice" type="number" min="0.000001" step="any" placeholder="비교할 주가 입력"></label><label class="field" id="inputFxField" hidden><span>적용 환율 (1달러당 원)</span><input id="inputFx" type="number" min="0.000001" step="any"><small id="inputFxNote"></small></label><p class="caption muted">집값 ÷ 입력한 주가로 환산합니다. 그래프에서 날짜를 누르면 그날의 종가를 가져옵니다.</p></div></div>
+<div id="stockDateFields"><label class="field"><span>주식 기준일</span><input type="date" id="stockDate" min="2000-01-01" value="2025-01-15" required></label><button type="button" id="stockToday" style="margin-bottom:14px">주식 기준일을 오늘로</button></div><button type="submit" class="primary full" id="calculateButton">집값을 주식 수로 환산하기 →</button><p class="caption muted" id="rule">선택일 이전의 가장 최근 관측값을 사용합니다. 미국 주식 환율은 실제 주가 날짜 이전의 최근 값입니다.</p></form>
+<details class="card"><summary>계산 기준 알아보기</summary><p class="caption">필요 주식 수 = 집값 ÷ 원화 주가<br>미국 주식 원화 주가 = 달러 주가 × 환율<br>정수 단위로 환산할 때는 올림합니다.</p><p class="caption">당시 1주 단위의 가격 환산입니다. 자동 수집 주가는 분할 조정을 역산한 추정값이며, 제공처 기업행위 오류를 보정하지 못할 수 있습니다. 배당·세금·수수료·대출·취득비용은 제외합니다. 과거 매수 후 현재 보유 수익률을 계산하는 기능이 아닙니다.</p><p class="caption">거래가 없는 날짜의 집값은 최근 관측값일 뿐 현재 매물 가격이 아닙니다. 표본 수나 층별 차이도 자동 보정하지 않습니다.</p></details></aside>
+<section><div id="stockChartPanel" class="card"><h2>선택 종목의 주가 기록</h2><p id="chartMeta" class="caption muted"></p><div id="stockChart"></div><p id="chartSelection" class="caption" aria-live="polite"></p><div id="nearPrices"></div><p class="caption muted">저장된 일별 종가 기준입니다. 주식분할 전후 단위가 달라질 수 있으며 장중 고가·저가는 표시하지 않습니다. 가로선은 입력 가격 수준이며, 특정 날짜에 정확히 그 가격으로 거래되었다는 뜻은 아닙니다.</p></div><div id="results" aria-live="polite"><div class="card empty">가격 데이터를 준비하고 있습니다.</div></div>
+</section></div>
+<footer>집의 다른 단위 · v0.7 &nbsp; / &nbsp; Python 계산 엔진<br>자동 수집 자료는 local_data/market.sqlite3에 저장됩니다. CSV 불러오기는 임시 비교용입니다. 서버가 꺼져 있으면 자동 갱신도 멈춥니다.</footer></main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), fmt=(n,d=0)=>Number(n).toLocaleString('ko-KR',{maximumFractionDigits:d}), esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>Math.abs(n)>=1e8?fmt(n/1e8,2)+'억 원':fmt(n)+'원';
+let raw, catalog, manual=false, demo=true, saved=false, syncTimer=null, lastResult=null, dirty=false, revision=0;
+async function api(path,body){const r=await fetch(path,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});const data=await r.json();if(!r.ok)throw new Error(data.error||'요청에 실패했습니다.');return data;}
+function error(e){$('error').textContent=e.message;$('error').hidden=false;}
+function clearError(){$('error').hidden=true;}
+function options(el,items,label){el.replaceChildren(...items.map(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=label(r);return o;}));}
+function regions(){options($('region'),[...new Set(catalog.apartments.map(r=>r.region))].map(id=>({id})),r=>r.id);apartments();}
+function apartments(){const q=$('aptSearch').value.trim().toLowerCase();options($('apartment'),catalog.apartments.filter(r=>r.region===$('region').value&&(!q||r.name.toLowerCase().includes(q))),r=>`${r.name} · ${r.area_m2}㎡`);}
+function stocks(){const ids=new Set(Object.values(catalog.rankings||{}).flatMap(m=>m.top.map(r=>r.symbol)));options($('stock'),catalog.stocks.filter(r=>($('market').value==='ALL'||r.currency===$('market').value)&&($('stockSet').value==='ALL'||ids.has(r.id))),r=>`${r.name} (${r.id})${r.available===false?" · 주가 미수집":""}`);}
+function notice(){$('dataNotice').textContent=manual?'직접 입력 모드 · 입력한 값으로만 계산하며, 날짜에 맞는 실제 가격인지 검증하지 않습니다.':demo?'예시 데이터 · 모든 가격·환율·아파트는 기능 시연을 위한 가상 값입니다. 실제 시세가 아닙니다.':saved?'자동 수집 자료 · 아파트는 계약일별 중위값, 주가는 분할역산 추정 종가입니다. 관측일·출처를 확인하세요.':'사용자 CSV · 출처와 단위를 직접 확인한 데이터를 사용하세요. 진위 검증은 하지 않습니다.';}
+function invalidate(){revision++;dirty=true;lastResult=null;$('results').innerHTML='<div class="card empty">조건이 바뀌었습니다.<br>집값을 주식 수로 환산하기를 눌러 다시 계산하세요.</div>';}
+function mode(value){manual=value;updatePriceMode();$('dataFields').hidden=value;$('stockFields').hidden=value;$('manualFields').hidden=!value;$('manualStockFields').hidden=!value;$('tabData').classList.toggle('active',!value);$('tabManual').classList.toggle('active',value);$('rule').textContent=value?'입력한 날짜는 결과의 기준 표시용입니다. 실제 시세를 조회하지 않습니다.':'선택일 이전의 가장 최근 관측값을 사용합니다. 미국 주식 환율은 실제 주가 날짜 이전의 최근 값입니다.';notice();invalidate();}
+async function load(data,isDemo,useSaved=false){const next=await api('/api/catalog',useSaved?{saved:true}:{data});if(!useSaved&&(!next.apartments.length||!next.stocks.length))throw new Error('CSV에 아파트와 주식 자료가 필요합니다.');if(useSaved){$('housingStatus').innerHTML=(next.housing_status||[]).map(x=>`<p>${esc(x.name)} · ${x.count?`${x.count}개 단지·면적 수집됨`:'선택 기간 자료 미수집 / 거래 없음'}</p>`).join('');}raw=data;catalog=next;demo=isDemo;saved=useSaved;$('market').value='ALL';$('aptSearch').value='';$('stockSet').value=useSaved&&Object.keys(next.rankings||{}).length?'TOP':'ALL';regions();stocks();$('ranges').textContent=Object.entries(catalog.ranges).map(([k,v])=>v?`${k}: ${v.start} ~ ${v.end} (${v.count}행)`:`${k}: 없음`).join(' / ');notice();invalidate();await loadPriceHistory();}
+function sourceTable(r){const rows=[['아파트',money(r.house.price_krw),r.house.date,r.house.source],['주식',fmt(r.stock.price,4)+' '+r.stock.currency,r.stock.date,r.stock.source],['환율',r.fx?fmt(r.fx.krw_per_usd,4)+' 원/달러':'해당 없음',r.fx?r.fx.date:'—',r.fx?r.fx.source:'KRW']];return `<div class="card"><h2>계산에 사용한 관측값</h2><div class="tablewrap"><table><thead><tr><th>항목</th><th>가격</th><th>실제 관측일</th><th>출처</th></tr></thead><tbody>${rows.map(row=>'<tr>'+row.map(x=>`<td>${esc(x)}</td>`).join('')+'</tr>').join('')}</tbody></table></div><p class="warn">${r.warnings.map(esc).join('<br>')}</p><p class="caption muted">단지·면적별 가장 최근 관측값입니다. 자동 수집은 같은 계약일 여러 거래의 중위값이며, 층·동별 차이는 보정하지 않습니다. CSV는 대표값을 직접 정합니다.</p>`;}
+function render(r){
+ const label=manual?'직접 입력한 집':`${r.house.name} · ${r.house.area_m2}㎡`;
+ const stockLabel=manual?'입력한 주식':(catalog.stocks.find(x=>x.id===r.stock.id)?.name||r.stock.name);
+ const housePrice=manual?Number($('manualHouse').value):r.house.price_krw;
+ const stockDay=manual?$('stockDate').value:r.stock.date;
+ $('results').innerHTML=`<div class="hero"><span class="pill">${manual?'직접 입력':demo?'가상 예시':saved?'저장된 실거래·종가':'사용자 데이터'}</span><h2 style="margin-top:20px">${esc(label)}</h2><p>이 집 한 채의 가격 <strong>${money(housePrice)}</strong>은<br>${r.price_input?`입력 주가 ${fmt(r.stock.price,4)} ${esc(r.stock.currency)} 기준`:esc(stockDay)+' 기준'} ${esc(stockLabel)}</p><div class="big">${fmt(r.shares,2)}<span>주</span></div><p>에 해당합니다.</p><small>정수 주식으로 환산하면 ${fmt(r.whole_shares)}주 (올림)</small></div>
+ <div class="stats"><div class="stat"><small>기준 집값</small><strong>${money(housePrice)}</strong></div><div class="stat"><small>1주 원화 환산액</small><strong>${fmt(r.price_krw,4)}원</strong></div><div class="stat"><small>환산식</small><strong style="font-size:16px">집값 ÷ 1주 가격</strong></div></div>
+ <div class="card"><p class="caption">요청한 부동산 기준일: ${esc($('houseDate').value)}<br>${r.price_input?'주가 기준: 사용자가 입력한 단가':'요청한 주식 기준일: '+esc($('stockDate').value)}</p><p class="caption muted">집값은 그대로 두고 입력 주가를 바꾸거나 그래프의 날짜를 선택해 비교하세요. 그래프에는 수집된 기간만 나타납니다.</p></div>
+ ${manual?'<div class="card"><p class="caption">입력한 가격과 환율로 환산했습니다. 기준일의 실제 시세를 검증하지 않습니다.</p></div>':sourceTable(r)}`;
+}
+async function calculate(){clearError();if(!manual&&!$('apartment').value){$('results').innerHTML='<div class="card empty">지정 부동산의 저장된 거래가 없습니다.<br>데이터 수집에서 기간을 선택하고 수집을 실행하세요.</div>';return;}const requestedRevision=revision;const payload={mode:manual?'manual':'data',data:saved?undefined:raw,saved:saved,house_date:$('houseDate').value,stock_date:$('stockDate').value,apartment:$('apartment').value,stock:$('stock').value,house_price:$('manualHouse').value,price:$('manualPrice').value,currency:$('manualCurrency').value,fx:$('manualFx').value,input_price:$('inputPrice').value,input_fx:$('inputFx').value};$('calculateButton').disabled=true;try{const r=await api(!manual&&$('priceMode').value==='INPUT'?'/api/price-compare':'/api/calculate',payload);if(revision!==requestedRevision)return;lastResult=r;dirty=false;render(r);}catch(e){invalidate();error(e);}finally{$('calculateButton').disabled=false;}}
+$('stock').onchange=()=>{invalidate();loadPriceHistory();};
+$('stockToday').onclick=()=>{$('stockDate').value=localDay;invalidate();};
+$('compareForm').onsubmit=e=>{e.preventDefault();calculate();};$('compareForm').onchange=invalidate;$('compareForm').oninput=invalidate;$('region').onchange=()=>{$('aptSearch').value='';apartments();invalidate();};$('aptSearch').oninput=()=>{apartments();invalidate();};$('stockSet').onchange=()=>{stocks();invalidate();loadPriceHistory();};$('market').onchange=()=>{stocks();invalidate();loadPriceHistory();};$('manualCurrency').onchange=()=>{$('fxField').hidden=$('manualCurrency').value==='KRW';invalidate();};$('tabData').onclick=()=>{mode(false);$('importPanel').hidden=true;$('syncPanel').hidden=true;};$('tabManual').onclick=()=>{mode(true);$('importPanel').hidden=true;$('syncPanel').hidden=true;};$('tabImport').onclick=()=>{$('importPanel').hidden=!$('importPanel').hidden;};
+$('importButton').onclick=async()=>{clearError();try{const files=[$('fileA').files[0],$('fileS').files[0],$('fileF').files[0]];if(files.some(f=>!f))throw new Error('세 파일을 모두 선택하세요.');if(files.reduce((a,f)=>a+f.size,0)>6000000)throw new Error('파일 합계는 6MB 이하여야 합니다.');const texts=await Promise.all(files.map(f=>f.text()));await load({apartments:texts[0],stocks:texts[1],fx:texts[2]},false);mode(false);$('importPanel').hidden=true;}catch(e){error(e);}};
+$('demoButton').onclick=async()=>{try{await load(await api('/api/demo'),true);mode(false);await calculate();}catch(e){error(e);}};
+const today=new Date();const localDay=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;['houseDate','stockDate'].forEach(id=>$(id).max=localDay);
+
+$('tabSync').onclick=()=>{$('syncPanel').hidden=!$('syncPanel').hidden;$('importPanel').hidden=true;if(!$('syncPanel').hidden&&!syncTimer)pollSync();};
+$('syncEnd').value=localDay;$('syncStart').value=`${today.getFullYear()-1}-${String(today.getMonth()+1).padStart(2,'0')}-01`;['syncEnd','syncStart'].forEach(id=>$(id).max=localDay);
+const labels={apartments:'아파트 관측값',stocks:'일별 주가',fx:'일별 환율'};
+let watchEditing=false;
+function showRankings(){}
+function showWatchlist(w){
+ if(!w)return;
+ $('syncSymbols').value=w.items.map(x=>x.id).join(',');
+ $('watchNote').textContent=w.note;
+ $('rankingTables').innerHTML=['KRW','USD'].map(c=>`<h3>${c==='KRW'?'국내·ETF':'미국'} · ${w.items.filter(x=>x.currency===c).length}종목</h3><p>${w.items.filter(x=>x.currency===c).map(x=>`${esc(x.name)} (${esc(x.id)})`).join(' · ')}</p>`).join('');
+ if(!watchEditing)$('watchEditor').value=w.items.map(x=>`${x.id},${x.name}`).join('\n');
+}
+$('watchEditor').oninput=()=>watchEditing=true;
+$('watchSave').onclick=async()=>{clearError();try{const items=$('watchEditor').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(line=>{const [id,...rest]=line.split(',');return {id,name:rest.join(',').trim()||id};});const w=await api('/api/watchlist',{items});watchEditing=false;showWatchlist(w);if(saved){await load(null,false,true);mode(false);} }catch(e){error(e);}};
+function showSync(state){showWatchlist(state.watchlist);
+ const running=state.status==='running';$('syncStartButton').disabled=running;$('syncStopButton').disabled=!running;
+ $('syncState').textContent=`${state.message} (${state.completed}/${state.total} 단위, 성공 ${state.successes}, 과거 월 재사용 ${state.reused||0})`;
+ $('syncProgress').style.width=(state.total?state.completed/state.total*100:0)+'%';
+ $('keyStatus').textContent=state.has_key?'인증키 등록됨 (서버 메모리 또는 로컬 설정)':'인증키 미등록';
+ $('syncErrors').replaceChildren(...state.errors.map(text=>{const p=document.createElement('p');p.textContent=text;return p;}));
+ $('syncStats').innerHTML='<table><thead><tr><th>자료</th><th>전체 DB 저장 행 수</th><th>저장 범위</th><th>최근 수집</th></tr></thead><tbody>'+Object.entries(state.stats).map(([k,v])=>`<tr><td>${labels[k]}</td><td>${fmt(v.count)}</td><td>${esc(v.start||'—')} ~ ${esc(v.end||'—')}</td><td>${v.updated?esc(new Date(v.updated).toLocaleString()):'—'}</td></tr>`).join('')+'</tbody></table>';
+}
+async function pollSync(){try{const state=await api('/api/sync/status');showSync(state);if(state.status==='running')syncTimer=setTimeout(pollSync,1500);else{syncTimer=null;if(state.stats.apartments.count&&state.stats.stocks.count&&!manual){await load(null,false,true);$('houseDate').value=(catalog.ranges.apartments?.end||localDay);$('stockDate').value=(catalog.ranges.stocks?.end||localDay);await calculate();}}}catch(e){error(e);syncTimer=null;}}
+$('syncStartButton').onclick=async()=>{clearError();try{const options={api_key:$('apiKey').value,start:$('syncStart').value,end:$('syncEnd').value,regions:$('syncRegions').value,symbols:$('syncSymbols').value,apartments:$('collectA').checked,stocks:$('collectS').checked,fx:$('collectF').checked,auto:$('autoRefresh').checked,seoul_all:$('seoulAll').checked,rank_kr:false,rank_us:false,refresh_all:$('refreshAll').checked};showSync(await api('/api/sync/start',options));$('apiKey').value='';if(syncTimer)clearTimeout(syncTimer);pollSync();}catch(e){error(e);}};
+$('syncStopButton').onclick=async()=>{try{showSync(await api('/api/sync/cancel',{}));}catch(e){error(e);}};
+$('autoOffButton').onclick=async()=>{try{showSync(await api('/api/sync/auto-off',{}));$('autoRefresh').checked=false;}catch(e){error(e);}};
+$('useSavedButton').onclick=async()=>{clearError();try{await load(null,false,true);$('houseDate').value=(catalog.ranges.apartments?.end||localDay);$('stockDate').value=(catalog.ranges.stocks?.end||localDay);mode(false);$('syncPanel').hidden=true;await calculate();}catch(e){error(e);}};
+let chartRows=[], chartCurrency='KRW', chartRequest=0, pickedDate=null;
+function updatePriceMode(){
+ const direct=!manual&&$('priceMode').value==='INPUT';
+ $('inputPricing').hidden=manual;
+ $('inputPriceFields').hidden=!direct;
+ $('stockDateFields').hidden=direct;
+ $('stockChartPanel').hidden=manual;
+ $('inputPrice').required=direct;
+ $('inputFx').required=direct&&chartCurrency==='USD';
+ $('inputFxField').hidden=chartCurrency!=='USD';
+ $('stockDate').required=!direct;
+ drawPriceChart();
+}
+async function loadPriceHistory(){
+ clearTimeout(priceTimer);
+ const request=++chartRequest;
+ chartRows=[];pickedDate=null;$('inputPrice').value='';$('inputFx').value='';$('inputFxNote').textContent='';
+ $('chartMeta').textContent='';$('stockChart').textContent='주가 기록을 불러오는 중…';$('nearPrices').replaceChildren();$('chartSelection').textContent='';
+ chartCurrency=catalog.stocks.find(x=>x.id===$('stock').value)?.currency||'KRW';
+ $('priceUnit').textContent=`비교할 1주 가격 (${chartCurrency==='KRW'?'원':'달러'})`;
+ updatePriceMode();$('calculateButton').disabled=true;
+ try{
+  const data=await api('/api/stock-history',{saved,data:saved?undefined:raw,stock:$('stock').value});
+  if(request!==chartRequest)return;
+  chartRows=data.rows||[];
+  if(chartRows.length)$('inputPrice').value=chartRows.at(-1).price;
+  if(chartCurrency==='USD'&&data.fx){$('inputFx').value=data.fx.krw_per_usd;$('inputFxNote').textContent=`${data.fx.date} 저장 환율로 초기 설정 · 수정 가능. 과거 주가를 선택해도 이 환율은 유지됩니다.`;}
+  if(chartCurrency==='USD'&&!data.fx)$('inputFxNote').textContent='저장 환율이 없습니다. 적용할 원/달러 환율을 입력하세요.';
+  $('chartMeta').textContent=chartRows.length?`${data.stock?.name||$('stock').value} · ${chartRows[0].date} ~ ${chartRows.at(-1).date} · ${chartRows.length}개 종가 · ${chartCurrency}`:'저장된 주가가 없습니다. 가격 직접 입력은 가능하며, 그래프는 주식 수집 후 표시됩니다.';
+  drawPriceChart();
+ }catch(e){if(request===chartRequest){$('stockChart').textContent='주가 기록을 불러오지 못했습니다.';error(e);}}
+ finally{if(request===chartRequest)$('calculateButton').disabled=false;}
+}
+function chooseChartRow(index){
+ const row=chartRows[index];if(!row)return;
+ $('priceMode').value='INPUT';$('inputPrice').value=row.price;pickedDate=row.date;
+ invalidate();updatePriceMode();
+ $('chartSelection').textContent=`${row.date} 종가 ${fmt(row.price,4)} ${chartCurrency}를 입력했습니다. 집값은 유지됩니다.${chartCurrency==='USD'?' 환율은 아래 입력값을 그대로 적용합니다.':''}`;
+ calculate();
+}
+function drawPriceChart(){
+ const target=Number($('inputPrice').value),valid=Number.isFinite(target)&&target>0;
+ const direct=$('priceMode').value==='INPUT';
+ if(!chartRows.length){$('stockChart').innerHTML='<p class="muted">수집된 주가 기록이 없습니다.</p>';$('nearPrices').replaceChildren();return;}
+ const w=900,h=330,left=85,right=25,top=38,bottom=40;
+ const prices=chartRows.map(x=>Number(x.price));
+ let lo=Math.min(...prices,...(direct&&valid?[target]:[])),hi=Math.max(...prices,...(direct&&valid?[target]:[]));
+ const pad=Math.max((hi-lo)*.1,hi*.02,.01);lo=Math.max(0,lo-pad);hi+=pad;
+ const first=Date.parse(chartRows[0].date),last=Date.parse(chartRows.at(-1).date);
+ const x=d=>first===last?w/2:left+(Date.parse(d)-first)/(last-first)*(w-left-right);
+ const y=p=>top+(hi-p)/(hi-lo)*(h-top-bottom);
+ const nearest=valid?prices.reduce((best,p,i)=>Math.abs(p-target)<Math.abs(prices[best]-target)?i:best,0):0;
+ let axes='';for(let i=0;i<5;i++){const v=lo+(hi-lo)*i/4;axes+=`<line x1="${left}" x2="${w-right}" y1="${y(v)}" y2="${y(v)}" stroke="#e2e8e1"/><text x="${left-9}" y="${y(v)+4}" text-anchor="end" font-size="12" fill="#677970">${fmt(v,2)}</text>`;}
+ const line=direct&&valid?`<line x1="${left}" x2="${w-right}" y1="${y(target)}" y2="${y(target)}" stroke="#c26919" stroke-width="2" stroke-dasharray="7 5"/><text x="${w-right}" y="${Math.max(18,y(target)-8)}" text-anchor="end" fill="#a24c08" font-size="13">입력 ${fmt(target,4)} ${chartCurrency}</text><circle cx="${x(chartRows[nearest].date)}" cy="${y(prices[nearest])}" r="5" fill="#c26919"/>`:'';
+ $('stockChart').innerHTML=`<svg id="priceSvg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(chartCurrency)} 종가 그래프. 날짜별 가격 선택은 아래 버튼 또는 날짜 입력에서도 가능합니다." style="cursor:crosshair;touch-action:pan-y"><text x="${left}" y="18" fill="#677970" font-size="12">${chartCurrency}</text>${axes}<polyline points="${chartRows.map(r=>`${x(r.date)},${y(Number(r.price))}`).join(' ')}" stroke="#19664e" fill="none" stroke-width="2"/>${chartRows.length===1?`<circle cx="${x(chartRows[0].date)}" cy="${y(prices[0])}" r="4" fill="#19664e"/>`:''}${line}<text x="${left}" y="${h-12}" font-size="12">${esc(chartRows[0].date)}</text><text x="${w-right}" y="${h-12}" text-anchor="end" font-size="12">${esc(chartRows.at(-1).date)}</text></svg>`;
+ const svg=$('priceSvg');
+ function nearestIndex(event){const box=svg.getBoundingClientRect();const px=(event.clientX-box.left)/box.width*w;const day=first+(Math.max(left,Math.min(w-right,px))-left)/(w-left-right)*(last-first);return chartRows.reduce((best,r,i)=>Math.abs(Date.parse(r.date)-day)<Math.abs(Date.parse(chartRows[best].date)-day)?i:best,0);}
+ svg.onpointermove=event=>{const r=chartRows[nearestIndex(event)];$('chartSelection').textContent=`${r.date} · ${fmt(r.price,4)} ${chartCurrency} · 클릭하면 이 종가로 계산`;};
+ svg.onclick=event=>chooseChartRow(nearestIndex(event));
+ const closest=valid?[...chartRows.keys()].sort((a,b)=>Math.abs(prices[a]-target)-Math.abs(prices[b]-target)).slice(0,3):[];
+ $('nearPrices').innerHTML=direct&&valid?`<p class="caption">입력 가격과 가까운 저장 종가 (정확한 일치 또는 유일한 날짜를 의미하지 않습니다)</p>${closest.map(i=>`<button type="button" data-price-index="${i}" style="margin:3px">${esc(chartRows[i].date)} · ${fmt(prices[i],4)} ${chartCurrency}</button>`).join('')}`:'';
+ $('nearPrices').querySelectorAll('button').forEach(b=>b.onclick=()=>chooseChartRow(Number(b.dataset.priceIndex)));
+}
+let priceTimer;
+function schedulePriceCalculation(){invalidate();clearTimeout(priceTimer);drawPriceChart();priceTimer=setTimeout(()=>{if($('inputPrice').value&&Number($('inputPrice').value)>0&&(!($('inputFx').required)||Number($('inputFx').value)>0))calculate();},450);}
+$('priceMode').onchange=()=>{invalidate();updatePriceMode();};
+$('inputPrice').oninput=()=>{pickedDate=null;$('chartSelection').textContent='입력 가격 수준을 가로선으로 표시합니다.';schedulePriceCalculation();};
+$('inputFx').oninput=schedulePriceCalculation;
+updatePriceMode();
+
+(async()=>{try{const state=await api('/api/sync/status');showSync(state);const c=state.settings;if(c&&c.selection_version===5){$('syncStart').value=c.start;$('syncEnd').value=c.end;$('syncRegions').value=c.regions;$('syncSymbols').value=c.symbols;$('autoRefresh').checked=c.auto;$('collectA').checked=c.apartments;$('collectS').checked=c.stocks;$('collectF').checked=c.fx;$('seoulAll').checked=c.seoul_all??true;$('rankKr').checked=false;$('rankUs').checked=false;$('refreshAll').checked=c.refresh_all??false;}
+showWatchlist(state.watchlist);if(state.stats.apartments.count&&state.stats.stocks.count){await load(null,false,true);$('houseDate').value=localDay;$('stockDate').value=localDay;$('syncPanel').hidden=true;}else{await load(null,false,true);}await calculate();if(state.status==='running')pollSync();
+}catch(e){error(e);$('results').innerHTML='<div class="card empty">데이터를 불러오지 못했습니다. 서버 실행 상태를 확인하세요.</div>';}})();
+
+</script></body></html>

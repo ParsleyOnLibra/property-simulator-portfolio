@@ -1,0 +1,95 @@
+{
+  "checked_on": "2026-10-19",
+  "note": "직접 지정한 주식 12개 + 국내 상장 ETF 5개. 순위 자동 조회 없음. 종목 추가·제거 가능. 상장 전 날짜의 가격은 생성하지 않습니다.",
+  "sources": [
+    "https://www.skhynix.com/ir/UI-FR-IR03/",
+    "https://ir.spacex.com/faqs-and-contact/"
+  ],
+  "items": [
+    {
+      "id": "005930.KS",
+      "name": "삼성전자",
+      "currency": "KRW"
+    },
+    {
+      "id": "000660.KS",
+      "name": "SK하이닉스",
+      "currency": "KRW"
+    },
+    {
+      "id": "009150.KS",
+      "name": "삼성전기",
+      "currency": "KRW"
+    },
+    {
+      "id": "006400.KS",
+      "name": "삼성SDI",
+      "currency": "KRW"
+    },
+    {
+      "id": "MU",
+      "name": "마이크론",
+      "currency": "USD"
+    },
+    {
+      "id": "NVDA",
+      "name": "엔비디아",
+      "currency": "USD"
+    },
+    {
+      "id": "SNDK",
+      "name": "샌디스크",
+      "currency": "USD"
+    },
+    {
+      "id": "INTC",
+      "name": "인텔",
+      "currency": "USD"
+    },
+    {
+      "id": "TSLA",
+      "name": "테슬라",
+      "currency": "USD"
+    },
+    {
+      "id": "SPCX",
+      "name": "스페이스X",
+      "currency": "USD"
+    },
+    {
+      "id": "IREN",
+      "name": "아이렌",
+      "currency": "USD"
+    },
+    {
+      "id": "SKHY",
+      "name": "SK하이닉스 ADR",
+      "currency": "USD"
+    },
+    {
+      "id": "069500.KS",
+      "name": "KODEX 200",
+      "currency": "KRW"
+    },
+    {
+      "id": "102110.KS",
+      "name": "TIGER 200",
+      "currency": "KRW"
+    },
+    {
+      "id": "114800.KS",
+      "name": "KODEX 인버스",
+      "currency": "KRW"
+    },
+    {
+      "id": "379810.KS",
+      "name": "KODEX 미국나스닥100",
+      "currency": "KRW"
+    },
+    {
+      "id": "379800.KS",
+      "name": "KODEX 미국S&P500",
+      "currency": "KRW"
+    }
+  ]
+}
