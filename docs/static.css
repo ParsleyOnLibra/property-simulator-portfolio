@@ -1,0 +1,6 @@
+/* Public demo additions to the original v0.7 interface. */
+#tabSync,#syncPanel,#housingPanel,#rankPanel{display:none!important}
+header{border-bottom:3px solid #19664e}
+.brand{letter-spacing:.04em}
+.notice{font-weight:600}
+footer{border-top:1px solid var(--line);padding-top:20px}
